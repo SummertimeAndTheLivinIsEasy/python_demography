@@ -1,0 +1,25 @@
+.navbar-custom {
+    background-color: #3AA6D0;
+}
+.carousel-item img{
+    object-fit: cover;
+    vertical-align: middle;
+    border-style: none;
+    height: 60vh;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:focus, .btn-primary:active:after{
+    background-color: #62B1D0;
+    color: #024C68;
+    border: none;
+    box-shadow: none;
+    width: 100%;
+}
+
+
+
+
+.collapse{
+    color: #024C68;
+}
+
