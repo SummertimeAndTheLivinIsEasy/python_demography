@@ -3,5 +3,89 @@
 
 {% block content %}
 
-    <h1>Hi, It's content!</h1>
+<div class="container">
+
+    <!--хлебные крошки начало-->
+    <!--    <nav style="&#45;&#45;bs-breadcrumb-divider: '>';" aria-label="breadcrumb">-->
+    <!--        <ul class="breadcrumb">-->
+    <!--            <li class="breadcrumb-item"><a href="/index"><b>Главная</b></a></li>-->
+    <!--            <li class="breadcrumb-item active" aria-current="page">Иду</li>-->
+    <!--        </ul>-->
+    <!--    </nav>-->
+
+    <div>
+        {%- for breadcrumb in breadcrumbs -%}
+        <a href="{{ breadcrumb.url }}" style='color: #024C68; text-decoration: none; '><b>{{ breadcrumb.text }}</b></a>
+        {{ '/' if not loop.last }}
+        {%- endfor -%}
+    </div>
+    <!--хлебные крошки конец-->
+
+    <div class="row">
+
+        <div class="col-lg-6 col-md-6">
+            <div class="card">
+                <img src="./static/images/wild.jpg" class="card-img-top" alt="Линдуловская роща">
+                <div class="card-body">
+                    <h5 class="card-title">Линдуловская роща<img class="rounded float-end"
+                                                                 src="./static/images/hiker_dark.png"></h5>
+                    <p class="card-text">
+                    <ol style="list-style-type: none;">
+                        <li>Протяженность: 5,5 км</li>
+                        <li>Время прохождения: от 1,5 часа</li>
+                        <li>Стоимость: 200 руб.</li>
+
+                    </ol>
+                    </p>
+                    <a href="route_description.html" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <div class="card">
+                <img src="./static/images/gryada.jpg" class="card-img-top" alt="Линдуловская роща">
+                <div class="card-body">
+                    <h5 class="card-title">Гряда Вярямянселькя<img class="rounded float-end"
+                                                                   src="./static/images/hiker_dark.png"></h5>
+                    <p class="card-text">
+                    <ol style="list-style-type: none;">
+                        <li>Протяженность: 11 км</li>
+                        <li>Время прохождения: от 3 часов</li>
+                        <li>Стоимость: бесплатно</li>
+
+                    </ol>
+                    </p>
+                    <a href="#" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for item in trip_level2 %}
+        <div class="col">
+            <div class="card">
+                <div class="card">
+                    <img src="./static/images/gryada.jpg" class="card-img-top" alt="Линдуловская роща">
+                    <div class="card-body">
+                        <h5 class="card-title">Гряда Вярямянселькя<img class="rounded float-end"
+                                                                       src="./static/images/hiker_dark.png"></h5>
+                        <p class="card-text">
+                        <ol style="list-style-type: none;">
+                            <li>Протяженность: {{ item.id }}</li>
+                            <li>Время прохождения: {{ item.name }}</li>
+                            <li>Стоимость: бесплатно</li>
+
+                        </ol>
+                        </p>
+                        <a href="#" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
 {% endblock %}

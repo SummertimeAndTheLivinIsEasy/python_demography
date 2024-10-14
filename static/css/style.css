@@ -1,6 +1,20 @@
+body > .container{
+    padding-top: 100px;
+    padding-bottom: 60px;
+    color: #024C68;
+
+}
+
 .navbar-custom {
     background-color: #3AA6D0;
 }
+
+.header_on_main_page{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .carousel-item img{
     object-fit: cover;
     vertical-align: middle;
@@ -8,18 +22,24 @@
     height: 60vh;
 }
 
-.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:focus, .btn-primary:active:after{
-    background-color: #62B1D0;
-    color: #024C68;
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:focus, .btn-primary:active:after, .btn-primary:visited{
+    background-color: #3AA6D0;
+    color: #E5ECED;
     border: none;
-    box-shadow: none;
+    box-shadow: none !important;
     width: 100%;
+    text-align: center !important;
 }
 
 
-
-
-.collapse{
+.card-body li{
     color: #024C68;
+    font-size: clamp(14px, 3vw, 16px);
+    text-align: justify;
 }
 
+.card-body li li{
+    list-style-type: disc;
+    color: #024C68;
+
+}
