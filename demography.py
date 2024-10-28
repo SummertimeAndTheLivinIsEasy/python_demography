@@ -18,13 +18,13 @@ app = Flask(__name__)
 
 
 # для хлебных крошек начало
-menu = Menu()
-breadcrumbs = Breadcrumbs(init_menu=False)
-
-menu.init_app(app)
-breadcrumbs.init_app(app)
-
-Breadcrumbs(app=app)
+# menu = Menu()
+# breadcrumbs = Breadcrumbs(init_menu=False)
+#
+# menu.init_app(app)
+# breadcrumbs.init_app(app)
+#
+# Breadcrumbs(app=app)
 
 
 # для хлебных крошек конец
