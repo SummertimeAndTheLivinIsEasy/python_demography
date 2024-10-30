@@ -33,7 +33,6 @@ app.config.from_object(Config)
 #
 # Breadcrumbs(app=app)
 
-
 # для хлебных крошек конец
 @app.route('/login', methods=['GET', 'POST'])
 def login():
