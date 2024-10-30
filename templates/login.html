@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row g-2">
+        <div class="col-lg-4 col-md-3 col-ms-12 d-flex flex-column"></div>
+
+        <div class="col-lg-4 col-md-6 col-ms-12 d-flex flex-column" style="background-color: #B2C6D8; padding: 10px">
+            <h1 class="text-center">Вход</h1>
+            <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+
+                <p style="padding: 10px;">
+                    {{ form.username.label }}<br>
+                    {{ form.username() }}<br>
+                    {% for error in form.username.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                </p>
+
+                <p style="padding: 10px;">
+                    {{ form.password.label }}<br>
+                    {{ form.password() }}<br>
+                    {% for error in form.password.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p style="padding: 10px">{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+
+                <!--                <p>{{ form.submit() }}</p>-->
+                <div style="padding: 10px">
+                    {{ form.submit(class_="btn btn-primary") }}
+                </div>
+
+            </form>
+
+        </div>
+        <div class="col-lg-4 col-md-3 col-ms-12 d-flex flex-column"></div>
+    </div>
+    <br>
+    <div class="row g-2">
+        <div class="col-lg-4 col-md-3 col-ms-12 d-flex flex-column"></div>
+        <div class="col-lg-4 col-md-6 col-ms-12 d-flex flex-column" style="background-color: #B2C6D8; padding: 10px">
+            <span class="text-center align-middle">Ещё нет аккаунта? <a href="#" class="link-light">Зарегистрируйтесь</a></span>
+        </div>
+        <div class="col-lg-4 col-md-3 col-ms-12 d-flex flex-column"></div>
+    </div>
+</div>
+
+{% endblock %}

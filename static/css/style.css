@@ -9,6 +9,10 @@
 /*  background-repeat: no-repeat;*/
 /*  background-size: cover;*/
 /*}*/
+body {
+    background-color: #f4f4f4;
+}
+
 body > .container{
     padding-top: 100px;
     padding-bottom: 60px;
