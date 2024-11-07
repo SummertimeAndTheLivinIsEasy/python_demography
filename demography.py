@@ -9,8 +9,9 @@ from flask_menu import Menu
 import models
 # from models import Trip, Trip_type, Trip_level, Trip_description, Trip_duration, Photo, Trip_photo, Session, User
 from sqlalchemy import select
-from forms import LoginForm
+from forms import LoginForm, RegistrationForm, CommentForm
 from config import Config
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, current_user, login_user, logout_user
 
 # для хлебных крошек конец
@@ -18,7 +19,15 @@ from flask_login import LoginManager, current_user, login_user, logout_user
 
 app = Flask(__name__)
 app.config.from_object(Config)
-# login_manager = LoginManager(app)
+login_manager = LoginManager(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    with models.Session() as session:
+        session.commit()
+        return session.query(models.User).get(int(user_id))
+
+
 # login_manager.login_view = 'login_manager'
 # Session = sessionmaker(bind=engine)
 # session = Session()
@@ -36,25 +45,41 @@ app.config.from_object(Config)
 # для хлебных крошек конец
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # if current_user.is_authenticated:
-    #     return redirect(url_for('index'))
+    if current_user.is_authenticated:
+        print(f"Вход выполнен: {current_user}")
+        return redirect(url_for('index'))
     form = LoginForm()
-    # with models.Session() as session:
-    #     session.commit()
-    # if form.validate_on_submit():
-    #     user = session.scalar(
-    #         select(models.User).where(models.User.username == form.username.data))
-    #     if user is None or not user.check_password(form.password.data):
-    #         flash('Invalid username or password')
-    #         return redirect(url_for('login'))
-        # login_user(user, remember=form.remember_me.data)
-        # return redirect(url_for('index'))
+    with models.Session() as session:
+        session.commit()
+    if form.validate_on_submit():
+        user = session.scalar(
+            select(models.User).where(models.User.username == form.username.data))
+        if user is None or not user.check_password(form.password.data):
+            flash('Неверный логин или пароль')
+            return redirect(url_for('login'))
+        # print(f"user: {user.username}, {current_user}")
+        login_user(user, remember=form.remember_me.data)
+        # print(f"user: {user.about_me}")
+        return redirect(url_for('index'))
     return render_template('login.html', title='Войти', form=form)
 
-# @app.route('/logout')
-# def logout():
-#     logout_user()
-#     return redirect(url_for('index'))
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = models.User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        with models.Session() as session:
+            session.add(user)
+            session.commit()
+        flash('Поздравляем! Вы зарегистрированы!')
+        return redirect(url_for('login'))
+    return render_template('register.html', title='Зарегистрироваться', form=form)
 
 @app.route('/')
 @app.route('/index')
@@ -80,9 +105,23 @@ def content(type_name: str):
     # trip_list = session.query(Trip).filter(Trip.trip_type_id == s1.id)
     return render_template('content.html', title=type_name, trip_list=trip_list, type_id=type_id)
 
-@app.route('/trip/<int:trip_id>')
+@app.route('/trip/<int:trip_id>', methods=['GET', 'POST'])
 # @register_breadcrumb(app, './content/<type_name>', '<type_name>')
 def trip(trip_id: int):
+    form = CommentForm()
+
+    if form.validate_on_submit():
+        if form.add_btn:
+            if current_user.is_authenticated:
+                with models.Session() as session:
+                    session.add(models.Comment(description=form.comment.data, trip_id=trip_id, user_id=current_user.id))
+                    session.commit()
+            else:
+                flash('Комментарии могут оставлять только зарегистрированные пользователи')
+            return redirect(url_for('trip', trip_id=trip_id))
+
+
+
     with models.Session() as session:
         session.commit()
     # print(f"type_name: {type_name}")
@@ -91,7 +130,10 @@ def trip(trip_id: int):
     trip_photos = session.query(models.Trip_photo, models.Photo).join(models.Photo).filter(models.Trip_photo.trip_id==trip_id).all()
     len_trip_photos = len(trip_photos)
     trip_description = session.query(models.Trip, models.Trip_type, models.Trip_level, models.Trip_description, models.Trip_duration, models.Photo).join(models.Trip_type).join(models.Trip_level).join(models.Trip_description).join(models.Trip_duration).join(models.Photo).filter(models.Trip.id == trip_id)
-    return render_template('trip.html', title=trip_description[0][1].type_name, trip_description=trip_description, trip_photos=trip_photos, len_trip_photos=len_trip_photos)
+    trip_comments = session.query(models.Comment, models.User).join(models.User).filter(models.Comment.trip_id == trip_id).order_by(models.Comment.id.desc())
+    # for i in trip_comments:
+    #     print(f"i для trip_comments: {i[0]}, {i}")
+    return render_template('trip.html', title=trip_description[0][1].type_name, trip_description=trip_description, trip_photos=trip_photos, len_trip_photos=len_trip_photos, form=form, trip_comments=trip_comments)
 
 @app.route('/faq')
 # @register_breadcrumb(app, './faq', 'FAQ')

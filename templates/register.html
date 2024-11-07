@@ -4,51 +4,45 @@
 {% block content %}
 
 <div class="container">
-
-    <!--Сообщения об ошибках начало-->
-
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-        {{ message }}
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-
-    <!--Сообщения об ошибках конец-->
-
     <div class="row g-2">
         <div class="col-lg-4 col-md-3 col-ms-12 d-flex flex-column"></div>
 
         <div class="col-lg-4 col-md-6 col-ms-12 d-flex flex-column" style="background-color: #B2C6D8; padding: 10px">
-            <h1 class="text-center">Вход</h1>
+            <h1 class="text-center">Регистрация</h1>
             <form action="" method="post" novalidate>
                 {{ form.hidden_tag() }}
 
                 <p style="padding: 10px;">
+                    {{ form.email.label }}<br>
+                    {{ form.email() }}<br>
+                     {% for error in form.email.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+
+                <p style="padding: 10px;">
                     {{ form.username.label }}<br>
                     {{ form.username() }}<br>
-                <div class="invalid-feedback">
-                    Please choose a username.
-                </div>
-
-                {% for error in form.username.errors %}
-                <div class="invalid-feedback">{{ error }}</div>
-                {% endfor %}
+                     {% for error in form.username.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
                 </p>
 
                 <p style="padding: 10px;">
                     {{ form.password.label }}<br>
                     {{ form.password() }}<br>
-                <div class="invalid-feedback">
-                    Please choose a username.
-                </div>
-
-                {% for error in form.password.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
+                    {% for error in form.password.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
                 </p>
-                <p style="padding: 10px">{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+                <p style="padding: 10px;">
+                    {{ form.password2.label }}<br>
+                    {{ form.password2() }}<br>
+                    {% for error in form.password2.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+
 
                 <!--                <p>{{ form.submit() }}</p>-->
                 <div style="padding: 10px">
@@ -64,7 +58,7 @@
     <div class="row g-2">
         <div class="col-lg-4 col-md-3 col-ms-12 d-flex flex-column"></div>
         <div class="col-lg-4 col-md-6 col-ms-12 d-flex flex-column" style="background-color: #B2C6D8; padding: 10px">
-            <span class="text-center align-middle">Ещё нет аккаунта? <a href="/register" class="link-light">Зарегистрируйтесь</a></span>
+            <span class="text-center align-middle">Уже зарегистрированы? <a href="/login" class="link-light">Войдите</a></span>
         </div>
         <div class="col-lg-4 col-md-3 col-ms-12 d-flex flex-column"></div>
     </div>

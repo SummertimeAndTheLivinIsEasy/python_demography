@@ -7,7 +7,7 @@ from sqlalchemy.inspection import inspect
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker
 from werkzeug.security import generate_password_hash, check_password_hash
-# from flask_login import UserMixin
+from flask_login import UserMixin
 # from demography import login_manager
 
 # import demography
@@ -96,9 +96,17 @@ class Trip_photo(Base):
     trip_id = Column(Integer, ForeignKey('trips.id'))
     photo_id = Column(Integer, ForeignKey('photos.id'))
 
+# @login_manager.user_loader
+# def load_user(user_id):
+#     with Session() as session:
+#         return session.get(User, int(user_id))
+
+
+    # return db.session.query(User).get(user_id)
+
 
 # class User(UserMixin, Base):
-class User(Base):
+class User(Base, UserMixin):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String(100), nullable=False, unique=True)
@@ -108,11 +116,11 @@ class User(Base):
     hashed_password = Column(String, nullable=True)
     comment = relationship("Comment", backref="user")
 
-    # def set_password(self, password):
-    #     self.hashed_password = generate_password_hash(password)
-    #
-    # def check_password(self, password):
-    #     return check_password_hash(self.hashed_password, password)
+    def set_password(self, password):
+        self.hashed_password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.hashed_password, password)
 
     # def get_id(self):
     #     return str(self.id)

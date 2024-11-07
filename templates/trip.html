@@ -5,6 +5,8 @@
 
 <div class="container">
 
+
+
     <!--    хлебные крошки начало-->
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ul class="breadcrumb">
@@ -98,6 +100,55 @@
     <br>
     <h5>Отзывы</h5>
     <br>
+
+
+    <div class="row gy-1">
+        <div class="col-lg-3 col-md-4 col-ms-12 text-lg-end  text-md-end text-sm-start">
+
+        </div>
+        <div class="col-lg-9 col-md-8 col-ms-12">
+            <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <p>{{ form.comment() }}</p>
+                <div>
+                    {{ form.add_btn(class_="btn btn-primary") }}
+                </div>
+                    {% for error in form.comment.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+            </form>
+    <!--Сообщения об ошибках начало-->
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <!--Сообщения об ошибках конец-->
+        </div>
+    </div>
+    <br>
+
+    {% for item in trip_comments %}
+    <div class="row gy-1">
+        <div class="col-lg-3 col-md-4 col-ms-12 text-lg-end  text-md-end text-sm-start">
+            <p>{{ item[1].username }}</p>
+        </div>
+        <div class="col-lg-9 col-md-8 col-ms-12">
+            <p style="white-space: pre-wrap">{{ item[0].description }}</p>
+            {% if current_user.id == item[1].id %}
+            {{ form.update_btn(class_="btn btn-primary") }}
+            {{ form.delete_btn(class_="btn btn-primary") }}
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    <br>
+
+
 </div>
 
 {% endblock %}
