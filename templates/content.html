@@ -21,78 +21,68 @@
     <!--    </div>-->
     <!--хлебные крошки конец-->
 
-    <!--    <div class="row">-->
+    <form action="" method="post" novalidate>
+        <div class="row d-flex align-items-center">
 
-    <!--        <div class="col-lg-6 col-md-6">-->
-    <!--            <div class="card">-->
-    <!--                <img src="./static/images/Линдуловская_роща1.jpg" class="card-img-top" alt="Линдуловская роща">-->
-    <!--                <div class="card-body">-->
-    <!--                    <h5 class="card-title">Линдуловская роща<img class="rounded float-end"-->
-    <!--                                                                 src="./static/images/hiker_dark.png"></h5>-->
-    <!--                    <p class="card-text">-->
-    <!--                    <ol style="list-style-type: none;">-->
-    <!--                        <li>Протяженность: 5,5 км</li>-->
-    <!--                        <li>Время прохождения: от 1,5 часа</li>-->
-    <!--                        <li>Стоимость: 200 руб.</li>-->
+            {{ form.hidden_tag() }}
+            <div class="col-lg-3 col-md-4">
+                <p>
+                    {{ form.duration.label }}<br>
+                    {{ form.duration() }}
+                </p>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <p>
+                    {{ form.level.label }}<br>
+                    {{ form.level() }}
+                </p>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <div>
+                    {{ form.show_btn(class_="btn btn-primary") }}
+                </div>
+            </div>
 
-    <!--                    </ol>-->
-    <!--                    </p>-->
-    <!--                    <a href="route_description.html" class="btn btn-primary">Подробнее</a>-->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--        <div class="col-lg-6 col-md-6">-->
-    <!--            <div class="card">-->
-    <!--                <img src="./static/images/Гряда_Вярямянселькя1.jpg" class="card-img-top" alt="Гряда Вярямянселькя">-->
-    <!--                <div class="card-body">-->
-    <!--                    <h5 class="card-title">Гряда Вярямянселькя<img class="rounded float-end"-->
-    <!--                                                                   src="./static/images/hiker_dark.png"></h5>-->
-    <!--                    <p class="card-text">-->
-    <!--                    <ol style="list-style-type: none;">-->
-    <!--                        <li>Протяженность: 11 км</li>-->
-    <!--                        <li>Время прохождения: от 3 часов</li>-->
-    <!--                        <li>Стоимость: бесплатно</li>-->
+        </div>
 
-    <!--                    </ol>-->
-    <!--                    </p>-->
-    <!--                    <a href="#" class="btn btn-primary">Подробнее</a>-->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--    </div>-->
 
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-        {% for item in trip_list %}
-        <div class="col">
+</form>
+    <br>
+
+
+<div class="row row-cols-1 row-cols-md-2 g-2">
+    {% for item in trip_list %}
+    <div class="col">
+        <div class="card">
             <div class="card">
-                <div class="card">
-                    <img src="{{ url_for('static', filename='images/' + item[5].link) }}" class="card-img-top"
-                         alt="{{ item[5].photo_name }}" style="width: 100%; height: 20rem; object-fit:cover">
-                    <div class="card-body">
-                        {% if title == "Иду" %}
-                        <h5 class="card-title">{{ item[3].title }}<img class="rounded float-end"
-                                                                       src="/static/images/hiker_dark.png" alt="ty">
-                        </h5>
-                        {% else %}
-                        <h5 class="card-title">{{ item[3].title }}<img class="rounded float-end"
-                                                                       src="/static/images/bicycle_dark.png" alt="ty"></h5>
-                        {% endif %}
-                        <p class="card-text">
-                        <ol style="list-style-type: none;">
-<!--                            <li>Тип: {{ item[1].type_name }}</li>-->
-<!--                            <li>Длительность: {{ item[4].duration }}</li>-->
-                            <li>Уровень: {{ item[2].level_name }}</li>
-                            <li>Протяженность: {{ item[3].route_length }} км</li>
+                <img src="{{ url_for('static', filename='images/' + item[5].link) }}" class="card-img-top"
+                     alt="{{ item[5].photo_name }}" style="width: 100%; height: 20rem; object-fit:cover">
+                <div class="card-body">
+                    {% if title == "Иду" %}
+                    <h5 class="card-title">{{ item[3].title }}<img class="rounded float-end"
+                                                                   src="/static/images/hiker_dark.png" alt="ty">
+                    </h5>
+                    {% else %}
+                    <h5 class="card-title">{{ item[3].title }}<img class="rounded float-end"
+                                                                   src="/static/images/bicycle_dark.png" alt="ty">
+                    </h5>
+                    {% endif %}
+                    <p class="card-text">
+                    <ol style="list-style-type: none;">
+                        <!--                            <li>Тип: {{ item[1].type_name }}</li>-->
+                    <li>Длительность: {{ item[4].duration }}</li>
+                        <li>Уровень: {{ item[2].level_name }}</li>
+                        <li>Протяженность: {{ item[3].route_length }} км</li>
 
-                        </ol>
-                        </p>
-                        <a href="/trip/{{ item[0].id }}" class="btn btn-primary">Подробнее >>></a>
-                    </div>
+                    </ol>
+                    </p>
+                    <a href="/trip/{{ item[0].id }}" class="btn btn-primary">Подробнее >>></a>
                 </div>
             </div>
         </div>
-        {% endfor %}
     </div>
+    {% endfor %}
+</div>
 
 </div>
 

@@ -132,20 +132,28 @@
     </div>
     <br>
 
+
     {% for item in trip_comments %}
     <div class="row gy-1">
+
         <div class="col-lg-3 col-md-4 col-ms-12 text-lg-end  text-md-end text-sm-start">
             <p>{{ item[1].username }}</p>
         </div>
         <div class="col-lg-9 col-md-8 col-ms-12">
+            <form action="" method="post" novalidate>
+<!--            {{ item[0].id }}-->
+<!--            {% set item_id = item[0].id %}-->
             <p style="white-space: pre-wrap">{{ item[0].description }}</p>
             {% if current_user.id == item[1].id %}
             {{ form.update_btn(class_="btn btn-primary") }}
             {{ form.delete_btn(class_="btn btn-primary") }}
             {% endif %}
+                </form>
         </div>
+
     </div>
     {% endfor %}
+
     <br>
 
 
