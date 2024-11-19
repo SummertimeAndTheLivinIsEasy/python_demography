@@ -6,7 +6,6 @@
 <div class="container">
 
 
-
     <!--    хлебные крошки начало-->
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ul class="breadcrumb">
@@ -113,21 +112,24 @@
                 <div>
                     {{ form.add_btn(class_="btn btn-primary") }}
                 </div>
-                    {% for error in form.comment.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
+                {% for error in form.comment.errors %}
+                <span class="text-danger">[{{ error }}]</span>
+                {% endfor %}
             </form>
-    <!--Сообщения об ошибках начало-->
+            <!--Сообщения об ошибках начало-->
 
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-        {{ message }}
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
 
-    <!--Сообщения об ошибках конец-->
+            {% for message in messages %}
+            <span class="text-danger">
+                {{ message }}
+            </span>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <!--Сообщения об ошибках конец-->
         </div>
     </div>
     <br>
@@ -141,14 +143,14 @@
         </div>
         <div class="col-lg-9 col-md-8 col-ms-12">
             <form action="" method="post" novalidate>
-<!--            {{ item[0].id }}-->
-<!--            {% set item_id = item[0].id %}-->
-            <p style="white-space: pre-wrap">{{ item[0].description }}</p>
-            {% if current_user.id == item[1].id %}
-            {{ form.update_btn(class_="btn btn-primary") }}
-            {{ form.delete_btn(class_="btn btn-primary") }}
-            {% endif %}
-                </form>
+                <!--            {{ item[0].id }}-->
+                <!--            {% set item_id = item[0].id %}-->
+                <p style="white-space: pre-wrap">{{ item[0].description }}</p>
+                {% if current_user.id == item[1].id %}
+                {{ form.update_btn(class_="btn btn-primary") }}
+                {{ form.delete_btn(class_="btn btn-primary") }}
+                {% endif %}
+            </form>
         </div>
 
     </div>
