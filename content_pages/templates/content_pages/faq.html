@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container">
-        <!--    хлебные крошки начало-->
+    <!--    хлебные крошки начало-->
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="/index"><b>Главная</b></a></li>
@@ -98,7 +98,7 @@
             <p>
                 <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse_what_take_for_hiking_1_day"
                    role="button" aria-expanded="false" aria-controls="collapseExample">
-                    <img class="rounded float-start" src="../static/images/hiker.png">
+                    <img class="rounded float-start" src="{{ url_for('icons_bp.static', filename='hiker.png') }}">
                     <span class="align-middle">Что взять с собой в однодевный пеший поход</span>
                 </a>
             </p>
@@ -132,7 +132,7 @@
             <p>
                 <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse_what_take_for_riding_on_bike_1_day"
                    role="button" aria-expanded="false" aria-controls="collapseExample">
-                    <img class="rounded float-start" src="../static/images/bicycle.png">
+                    <img class="rounded float-start" src="{{ url_for('icons_bp.static', filename='bicycle.png') }}">
                     <span class="align-middle">Что взять с собой в однодевный велопоход</span>
                 </a>
             </p>

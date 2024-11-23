@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<style type="text/css">
+    body {
+        background-image: url('../../../static/images/main_photo1.jpg');
+        /* Full height */
+        width: 100vw;
+        height: 100vh;
+
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+
+<div class="container overflow-hidden">
+
+    <div class="row d-flex align-items-center" style="height: 50vh;">
+        <div class="col-lg-6 col-md-6 col-ms-12 d-flex flex-column">
+            <p class="fs-4 ">
+                <b>Ресурс создан для развития пешего и&nbsp;велотуризма в&nbsp; Санкт-Петербурге и&nbsp;Ленинградской
+                    области</b>
+            </p>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row gy-1">
+        <div class="col-lg-3 col-md-3 col-ms-12">
+            <a class="nav-link" href="/content/Иду/1/">
+                <button class="btn btn-primary" type="button"><img class="rounded float-start"
+                                                                   src="{{ url_for('icons_bp.static', filename='hiker_dark.png') }}">
+
+                    <span class="align-middle">ИДУ 1&nbsp;ДЕНЬ</span></button>
+            </a>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-ms-12">
+            <a class="nav-link" href="/content/Иду/2/">
+                <button class="btn btn-primary" type="button"><img class="rounded float-start"
+                                                                   src="{{ url_for('icons_bp.static', filename='hiker_dark.png') }}">
+                    <span class="align-middle">ИДУ 2&nbsp;ДНЯ</span></button>
+            </a>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-ms-12">
+            <a class="nav-link" href="/content/Еду/1/">
+                <button class="btn btn-primary" type="button"><img class="rounded float-start"
+                                                                   src="{{ url_for('icons_bp.static', filename='bicycle_dark.png') }}">
+                    <span class="align-middle">ЕДУ 1&nbsp;ДЕНЬ</span></button>
+            </a>
+        </div>
+
+
+        <div class="col-lg-3 col-md-3 col-ms-12">
+            <a class="nav-link" href="/content/Еду/2/">
+                <button class="btn btn-primary" type="button"><img class="rounded float-start"
+                                                                   src="{{ url_for('icons_bp.static', filename='bicycle_dark.png') }}">
+                    <span class="align-middle">ЕДУ 2&nbsp;ДНЯ</span></button>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

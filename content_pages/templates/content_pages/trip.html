@@ -19,18 +19,6 @@
     <h4>{{trip_description[0][3].title}}</h4>
     <br>
     {% for item in trip_description %}
-    <!--    <ol style="list-style-type: none;">-->
-    <!--        <li>Тип: {{ item[0].id }}</li>-->
-    <!--        <li>Как добраться: {{ item[3].how_to_go }}</li>-->
-    <!--        <li>Описание: {{ item[3].description }}</li>-->
-    <!--        <li>Протяженность: {{ item[3].route_length }} км</li>-->
-    <!--        <li><a href="{{ item[3].official_website_link }}">Ссылка на официальный сайт</a></li>-->
-    <!--        <li>Трек: {{ item[3].track }}</li>-->
-    <!--        <li>Уровень: {{ item[2].level_name }}</li>-->
-    <!--        <li>Описание: {{ item[3].title }}</li>-->
-
-    <!--    </ol>-->
-
 
     <div class="row gy-1">
         <div class="col-lg-3 col-md-4 col-ms-12">
@@ -48,8 +36,8 @@
     <div class="row gy-2">
         <div class="col-lg-3 col-md-4 col-ms-12 text-lg-end  text-md-end text-sm-start">
             <a data-bs-toggle="tooltip" data-bs-placement="top" title="Скачать трек"
-               href="{{ url_for('static', filename='tracks/' + item[3].track) }}" download><img
-                    src="../static/images/gps_track_light_green2.png" alt="GPS-track"></a>
+               href="{{ url_for('.static', filename='tracks/' + item[3].track) }}" download><img
+                    src="{{ url_for('icons_bp.static', filename='gps_track_light_green2.png') }}" alt="GPS-track"></a>
 
         </div>
         <div class="col-lg-9 col-md-8 col-ms-12">
@@ -66,7 +54,7 @@
         <div class="carousel-inner">
 
             <div class="carousel-item active">
-                <img src="{{ url_for('static', filename='images/' + trip_photos[0][1].link) }}" class="d-block w-100"
+                <img src="{{ url_for('.static', filename='images/' + trip_photos[0][1].link) }}" class="d-block w-100"
                      alt="{{ trip_photos[0][1].photo_name }}">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>{{ trip_photos[0][1].photo_name }}</h5>
@@ -76,7 +64,7 @@
             </div>
             {% for i in range(1, len_trip_photos) %}
             <div class="carousel-item">
-                <img src="{{ url_for('static', filename='images/' + trip_photos[i][1].link) }}" class="d-block w-100"
+                <img src="{{ url_for('.static', filename='images/' + trip_photos[i][1].link) }}" class="d-block w-100"
                      alt="{{ trip_photos[i][1].photo_name }}">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>{{ trip_photos[i][1].photo_name }}</h5>

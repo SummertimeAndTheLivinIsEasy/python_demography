@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="container">
+
+    <!--    хлебные крошки начало-->
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/index"><b>Главная</b></a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
+        </ul>
+    </nav>
+
+    <!--хлебные крошки конец-->
+
+    <form action="" method="post" novalidate>
+        <div class="row d-flex align-items-center">
+
+            {{ form.hidden_tag() }}
+            <div class="col-lg-3 col-md-4">
+                <p>
+                    {{ form.duration.label }}<br>
+                    {{ form.duration() }}
+                </p>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <p>
+                    {{ form.level.label }}<br>
+                    {{ form.level() }}
+                </p>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <div>
+                    {{ form.show_btn(class_="btn btn-primary") }}
+                </div>
+            </div>
+
+        </div>
+
+
+    </form>
+    <br>
+
+
+    <div class="row row-cols-1 row-cols-md-2 g-2">
+        {% for item in trip_list %}
+        <div class="col">
+            <div class="card">
+                <div class="card">
+                    <img src="{{ url_for('.static', filename='images/' + item[5].link) }}" class="card-img-top"
+                         alt="{{ item[5].photo_name }}" style="width: 100%; height: 20rem; object-fit:cover">
+                    <div class="card-body">
+                        {% if title == "Иду" %}
+                        <h5 class="card-title">{{ item[3].title }}<img class="rounded float-end"
+                                                                       src="{{ url_for('icons_bp.static', filename='hiker_dark.png') }}"
+                                                                       alt="ty">
+                        </h5>
+                        {% else %}
+                        <h5 class="card-title">{{ item[3].title }}<img class="rounded float-end"
+                                                                       src="{{ url_for('icons_bp.static', filename='bicycle_dark.png') }}"
+                                                                       alt="ty">
+                        </h5>
+                        {% endif %}
+                        <p class="card-text">
+                        <ol style="list-style-type: none;">
+                            <!--                            <li>Тип: {{ item[1].type_name }}</li>-->
+                            <li>Длительность: {{ item[4].duration }}</li>
+                            <li>Уровень: {{ item[2].level_name }}</li>
+                            <li>Протяженность: {{ item[3].route_length }} км</li>
+
+                        </ol>
+                        </p>
+                        <a href="/trip/{{ item[0].id }}" class="btn btn-primary">Подробнее >>></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

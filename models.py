@@ -1,16 +1,11 @@
-from sqlalchemy import create_engine, MetaData, Table, Integer, String, \
-    Column, DateTime, ForeignKey, Numeric
+from flask_login import UserMixin
+from sqlalchemy import create_engine, Integer, String, \
+    Column, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
-from datetime import datetime
-from sqlalchemy.inspection import inspect
-# from database import Base
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin
-# from demography import login_manager
 
-# import demography
 
 engine = create_engine("sqlite:///foo.db", echo=True)
 Session = sessionmaker(bind=engine)
@@ -60,10 +55,6 @@ class Trip_description(Base):
     main_photo_id = Column(Integer(), ForeignKey('photos.id'))
 
 
-# trip_photo = Table('trip_photo', Base.metadata,
-#     Column('trip_id', Integer(), ForeignKey("trips.id")),
-#     Column('photo_id', Integer(), ForeignKey("photos.id"))
-# )
 
 class Photo(Base):
     __tablename__ = 'photos'
@@ -96,14 +87,6 @@ class Trip_photo(Base):
     trip_id = Column(Integer, ForeignKey('trips.id'))
     photo_id = Column(Integer, ForeignKey('photos.id'))
 
-# @login_manager.user_loader
-# def load_user(user_id):
-#     with Session() as session:
-#         return session.get(User, int(user_id))
-
-
-    # return db.session.query(User).get(user_id)
-
 
 # class User(UserMixin, Base):
 class User(Base, UserMixin):
@@ -135,42 +118,7 @@ class Comment(Base):
     user_id = Column(Integer(), ForeignKey('user.id'))
 
 
-#
-# @login_manager.user_loader
-# def load_user(user_id):
-#     try:
-#         with Session() as session:
-#             session.commit()
-#         return session.query(User).get(user_id)
-#     except:
-#         return None
 
-# @login_manager.user_loader
-# def load_user(id):
-#     with Session() as session:
-#         session.commit()
-#     return session.get(User, int(id))
-#
 # Base.metadata.create_all(engine)
 
-# parent = Parent(name='John Doe', uuid=str(uuid.uuid4()))
-# session.add(parent)
-# session.commit()
-#
-# child = Child(name='Jimmy Doe', uuid=str(uuid.uuid4()))
-# session.add(child)
-# session.commit()
-#
-# parent.children.append(child)
-#
-# print('# Parents')
-# for parent in session.query(Parent).all():
-#     children = [x.name for x in parent.children]
-#     print(f'Parent: name={parent.name}, children={children}')
-# print()
-#
-# print('# Children')
-# for child in session.query(Child).all():
-#     parents = [x.name for x in child.parents]
-#     print(f'Child: name={child.name}, parents={parents}')
-# print()
+

@@ -50,7 +50,7 @@
                     {% else %}
 
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{{ url_for('logout') }}">Выйти</a>
+                        <a class="nav-link" aria-current="page" href="{{ url_for('auth.logout') }}">Выйти</a>
                     </li>
                     {% endif %}
                 </ul>
@@ -59,16 +59,7 @@
     </nav>
     <!--панель навигации конец-->
 
-    <!--хлебные крошки начало-->
-    <!--<div>-->
-    <!--{%- for breadcrumb in breadcrumbs -%}-->
-    <!--    <a href="{{ breadcrumb.url }}" style='color: #024C68; text-decoration: none; '><b>{{ breadcrumb.text }}</b></a>-->
-    <!--    {{ '/' if not loop.last }}-->
-    <!--{%- endfor -%}-->
-    <!--</div>-->
-    <!--хлебные крошки конец-->
 </div>
-
 
 
 {% block content %}
@@ -84,7 +75,6 @@
             © 2024 Copyright:
             <a class="text-body" href="/index">ИДУ-ЕДУ</a>
         </div>
-        <!-- Copyright -->
     </footer>
 </div>
 <!--футер конец-->
