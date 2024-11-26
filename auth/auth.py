@@ -7,7 +7,7 @@ from auth.auth_forms import LoginForm, RegistrationForm
 
 
 
-auth = Blueprint('auth', __name__, template_folder='templates/auth', static_folder='static')
+auth = Blueprint('auth', __name__, template_folder='templates/auth')
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -19,13 +19,13 @@ def login():
         session.commit()
     if form.validate_on_submit():
         user = session.scalar(
-            select(models.User).where(models.User.username == form.username.data))
+            select(models.User).where(models.User.email == form.email.data))
         if user is None or not user.check_password(form.password.data):
             flash('Неверный логин или пароль')
-            return redirect(url_for('login'))
-        # print(f"user: {user.username}, {current_user}")
+            return redirect(url_for('auth.login'))
+
         login_user(user, remember=form.remember_me.data)
-        # print(f"user: {user.about_me}")
+
         return redirect(url_for("main_page.index"))
     return render_template('login.html', title='Войти', form=form)
 
@@ -44,5 +44,5 @@ def register():
             session.add(user)
             session.commit()
         flash('Поздравляем! Вы зарегистрированы!')
-        return redirect(url_for('login'))
+        return redirect(url_for('auth.login'))
     return render_template('register.html', title='Зарегистрироваться', form=form)

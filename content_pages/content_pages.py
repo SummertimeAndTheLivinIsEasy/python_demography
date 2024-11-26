@@ -4,7 +4,7 @@ from flask_login import current_user
 import models
 from content_pages.content_forms import FilterForm, CommentForm
 
-content_pages = Blueprint('content_pages', __name__, template_folder='templates/content_pages', static_folder='static',  static_url_path='/content_pages/static')
+content_pages = Blueprint('content_pages', __name__, template_folder='templates/content_pages', static_folder='static', static_url_path='/content_pages/static')
 
 @content_pages.route('/content/<type_name>/', defaults={'duration': "---", 'level': "---"}, methods=['GET', 'POST'])
 @content_pages.route('/content/<type_name>/<duration>/', defaults={'level': "---"}, methods=['GET', 'POST'])
@@ -47,12 +47,12 @@ def trip(trip_id: int):
                     session.commit()
             else:
                 flash('Комментарии могут оставлять только зарегистрированные пользователи')
-            return redirect(url_for('trip', trip_id=trip_id))
-        if form.update_btn:
-            l = request.form["action"]
-            print(f"request.form['action']: {l}")
-            # print(f"select from update_btn: {str(select)}") # just to see what select is
-            return redirect(url_for('trip', trip_id=trip_id))
+            return redirect(url_for('content_pages.trip', trip_id=trip_id))
+        # if form.update_btn:
+        #     l = request.form["action"]
+        #     print(f"request.form['action']: {l}")
+        #     # print(f"select from update_btn: {str(select)}") # just to see what select is
+        #     return redirect(url_for('trip', trip_id=trip_id))
 
 
 
@@ -66,6 +66,18 @@ def trip(trip_id: int):
     trip_description = session.query(models.Trip, models.Trip_type, models.Trip_level, models.Trip_description, models.Trip_duration, models.Photo).join(models.Trip_type).join(models.Trip_level).join(models.Trip_description).join(models.Trip_duration).join(models.Photo).filter(models.Trip.id == trip_id)
     trip_comments = session.query(models.Comment, models.User).join(models.User).filter(models.Comment.trip_id == trip_id).order_by(models.Comment.id.desc())
     return render_template('trip.html', title=trip_description[0][1].type_name, trip_description=trip_description, trip_photos=trip_photos, len_trip_photos=len_trip_photos, form=form, trip_comments=trip_comments)
+
+@content_pages.route('/comment_delete/<int:trip_id>/<int:comment_id>', methods=['GET', 'POST'])
+def comment_del(trip_id: int, comment_id: int):
+    with models.Session() as session:
+        comment = session.query(models.Comment).filter(models.Comment.id==comment_id and models.Comment.user_id==current_user.id).first()
+        print("comment", comment)
+        print("trip_id", trip_id)
+        print("comment_id", comment_id)
+        if comment:
+            session.delete(comment)
+            session.commit()
+        return redirect(url_for('content_pages.trip', trip_id=trip_id))
 
 @content_pages.route('/faq')
 def faq():

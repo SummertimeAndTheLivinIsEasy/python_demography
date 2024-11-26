@@ -135,8 +135,10 @@
                 <!--            {% set item_id = item[0].id %}-->
                 <p style="white-space: pre-wrap">{{ item[0].description }}</p>
                 {% if current_user.id == item[1].id %}
-                {{ form.update_btn(class_="btn btn-primary") }}
-                {{ form.delete_btn(class_="btn btn-primary") }}
+<!--                {{ form.update_btn(class_="btn btn-primary") }}-->
+                        <a class="btn btn-danger btn-sm" href="/comment_delete/{{ item[0].trip_id }}/{{ item[0].id }}"
+        onclick="return confirm('Вы действительно хотите удалить комментарий {{ item.description }}?')">Удалить</a>
+<!--                {{ form.delete_btn(class_="btn btn-primary") }}-->
                 {% endif %}
             </form>
         </div>

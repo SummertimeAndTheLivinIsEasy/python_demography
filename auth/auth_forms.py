@@ -13,7 +13,7 @@ class LoginForm(FlaskForm):
     def get_translations(self, form):
       return super(FlaskForm.Meta, self).get_translations(form)
 
-  username = StringField('Email', validators=[DataRequired()],render_kw={'style': 'width: 100%', "placeholder": "Введите email"})
+  email = StringField('Email', validators=[DataRequired()],render_kw={'style': 'width: 100%', "placeholder": "Введите email"})
   password = PasswordField('Пароль', validators=[DataRequired()], render_kw={'style': 'width: 100%', "placeholder": "Введите пароль"})
   remember_me = BooleanField('Запомнить меня')
   submit = SubmitField('Войти')
