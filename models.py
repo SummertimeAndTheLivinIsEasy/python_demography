@@ -1,15 +1,14 @@
 from flask_login import UserMixin
-from sqlalchemy import create_engine, Integer, String, \
+from sqlalchemy import Integer, String, \
     Column, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
+# from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy.orm import sessionmaker
 from werkzeug.security import generate_password_hash, check_password_hash
+from data.db_session import Base
 
-
-engine = create_engine("sqlite:///foo.db", echo=True)
-Session = sessionmaker(bind=engine)
-Base = declarative_base()
+# engine = create_engine("sqlite:///foo.db", echo=True)
+# Session = sessionmaker(bind=engine)
+# Base = declarative_base()
 
 
 # engine = create_engine("postgresql+psycopg2://postgres:1111@localhost/sqlalchemy_tuts")

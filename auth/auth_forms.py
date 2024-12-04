@@ -3,6 +3,7 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
 import models
+from data import db_session
 
 
 class LoginForm(FlaskForm):
@@ -34,13 +35,25 @@ class RegistrationForm(FlaskForm):
   submit = SubmitField('Зарегистрироваться')
 
   def validate_username(self, username):
-    with models.Session() as session:
-      user = session.query(models.User).filter(models.User.username == username.data).first()
-      if user is not None:
-        raise ValidationError('Данное имя уже используется. Пожалуйста введите другое.')
+
+    # with models.Session() as session:
+    #   user = session.query(models.User).filter(models.User.username == username.data).first()
+    #   if user is not None:
+    #     raise ValidationError('Данное имя уже используется. Пожалуйста введите другое.')
+
+    session = db_session.create_session()
+
+    user = session.query(models.User).filter(models.User.username == username.data).first()
+    if user is not None:
+      raise ValidationError('Данное имя уже используется. Пожалуйста введите другое.')
 
   def validate_email(self, email):
-    with models.Session() as session:
-      user = session.query(models.User).filter(models.User.email == email.data).first()
-      if user is not None:
-        raise ValidationError('Пользователь с такой почтой уже зарегистрирован')
+    # with models.Session() as session:
+    #   user = session.query(models.User).filter(models.User.email == email.data).first()
+    #   if user is not None:
+    #     raise ValidationError('Пользователь с такой почтой уже зарегистрирован')
+
+    session = db_session.create_session()
+    user = session.query(models.User).filter(models.User.email == email.data).first()
+    if user is not None:
+      raise ValidationError('Пользователь с такой почтой уже зарегистрирован')
