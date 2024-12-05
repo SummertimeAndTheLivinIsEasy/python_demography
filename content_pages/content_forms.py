@@ -50,8 +50,7 @@ class FilterForm(FlaskForm):
 
 
 
-  duration = SelectField(u'Длительность', choices=[])
-  level = SelectField('Уровень подготовки', choices=[])
-
-
+  duration = SelectField(u'Длительность', choices = ["---", "1 день", "2 дня"], validate_choice=True)
+  level = SelectField('Уровень подготовки', choices = ["---", "Начинающий", "Продолжающий", "Продолжающий"], validate_choice=True)
+  # choices = ["---", "1 день", "2 дня"]
   show_btn = SubmitField('Показать')

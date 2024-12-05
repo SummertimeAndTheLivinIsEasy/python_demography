@@ -27,18 +27,31 @@ def teardown_request(request):
 # @app.route('/content/<type_name>')
 # @register_breadcrumb(app, './content/<type_name>', '<type_name>')
 def content(type_name: str, duration: str, level: str):
-    form = FilterForm(duration=duration, level=level)
+    # print(duration)
+    # print(level)
+    form = FilterForm(duration=duration)
 
-    durations = session.query(models.Trip_duration).all()
-    print(durations)
-    durations_list = ["---"] + [f"{i.duration} день" if i.id == 1 else f"{i.duration} дня" for i in durations]
+    # durations = session.query(models.Trip_duration).all()
+    # durations_list = ["---"] + [f"{i.duration} день" if i.id == 1 else f"{i.duration} дня" for i in durations]
+    # form.duration.choices = durations_list
+    # print(form.duration)
+
+    # levels = session.query(models.Trip_level).all()
+    # levels_list = ["---"] + [i.level_name for i in levels]
+    # form.level.choices = levels_list
+    # print(form.level)
+    #
+    # print(duration)
+    # print(level)
 
     if duration == "---":
-        # form = FilterForm(duration=duration, level=level)
-        form.duration.choices = durations_list
+        form = FilterForm(duration=duration, level=level)
+
+
     else:
-        # form = FilterForm(duration=f"{duration[0]} день" if duration[0] == "1" else f"{duration[0]} дня", level=level)
-        form.duration.choices = f"{duration[0]} день" if duration[0] == "1" else f"{duration[0]} дня"
+        form = FilterForm(duration=f"{duration[0]} день" if duration[0] == "1" else f"{duration[0]} дня", level=level)
+        # form.duration.data = f"{duration[0]} день" if duration[0] == "1" else f"{duration[0]} дня"
+        # form.level.data = level
     # with models.Session() as session:
     #     session.commit()
     type_id = session.query(models.Trip_type).filter(models.Trip_type.type_name == type_name).first()
@@ -55,8 +68,10 @@ def content(type_name: str, duration: str, level: str):
 
     if form.validate_on_submit():
         if form.show_btn:
+            print(form.duration.data)
+            print(form.level.data)
             return redirect(url_for('content_pages.content', title=type_name, type_name=type_name, duration=form.duration.data, level=form.level.data, type_id=type_id, form=form))
-    return render_template('content.html', title=type_name, trip_list=trip_list, type_id=type_id, form=form)
+    return render_template('content.html', title=type_name, trip_list=trip_list,duration=form.duration.data, level=form.level.data, type_id=type_id, form=form)
 
 @content_pages.route('/trip/<int:trip_id>', methods=['GET', 'POST'])
 def trip(trip_id: int):
