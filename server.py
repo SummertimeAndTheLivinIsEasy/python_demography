@@ -39,10 +39,6 @@ def load_user(user_id):
 
 if __name__ == '__main__':
     db_session.global_init("foo.db")
-    print(f'db_session.global_init("foo.db")')
-    # sess = db_session.create_session()
-    # user = models.User()
-
 #     # прописываем blueprint API в приложение
 #     app.register_blueprint(comment_api, url_prefix='/comment_api')
     app.run(debug=True)
